@@ -1,4 +1,9 @@
+import { useState } from "react";
+import ResultsCard from "./components/ResultsCard";
 function App() {
+  const [showResults, setShowResults] = useState(false);
+  const [url, setUrl] = useState("");
+const [articleText, setArticleText] = useState("");
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <div className="max-w-5xl mx-auto px-6 py-20">
@@ -66,28 +71,34 @@ function App() {
           </label>
 
           <input
-            type="text"
-            placeholder="Paste article URL here..."
-            className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+  type="text"
+  placeholder="Paste article URL here..."
+  value={url}
+  onChange={(e) => setUrl(e.target.value)}
+  className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
 
           <label className="block mb-2 text-slate-300">
             Article Text
           </label>
 
           <textarea
-            rows="6"
-            placeholder="Paste news article text..."
-           className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+  rows="6"
+  placeholder="Paste news article text..."
+  value={articleText}
+  onChange={(e) => setArticleText(e.target.value)}
+  className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
 
           <button
+          onClick={() => setShowResults(true)}
   className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02] transition-all duration-300 p-4 rounded-xl font-semibold shadow-lg"
 >
   Analyze News →
 </button>
 
         </div>
+        {showResults && <ResultsCard />}
 
       </div>
     </div>
