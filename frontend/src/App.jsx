@@ -1,5 +1,11 @@
 import { useState } from "react";
 import ResultsCard from "./components/ResultsCard";
+const mockResult = {
+  truthScore: 82,
+  confidence: 87,
+  sourcesChecked: 12,
+  verdict: "Mostly Reliable",
+};
 function App() {
   const [showResults, setShowResults] = useState(false);
   const [url, setUrl] = useState("");
@@ -97,10 +103,18 @@ const [articleText, setArticleText] = useState("");
   Analyze News →
 </button>
 
-        </div>
-        {showResults && <ResultsCard />}
+       </div>
 
-      </div>
+{showResults && (
+  <ResultsCard
+  truthScore={mockResult.truthScore}
+  confidence={mockResult.confidence}
+  sourcesChecked={mockResult.sourcesChecked}
+  verdict={mockResult.verdict}
+/>
+)}
+
+</div>
     </div>
   )
 }

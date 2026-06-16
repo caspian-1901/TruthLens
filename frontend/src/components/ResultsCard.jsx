@@ -1,4 +1,10 @@
-function ResultsCard() {
+import TruthScoreChart from "./TruthScoreChart";
+function ResultsCard({
+  truthScore,
+  confidence,
+  sourcesChecked,
+  verdict,
+})  {
   return (
     <div className="bg-slate-900/80 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-slate-800 mt-10">
 
@@ -8,7 +14,7 @@ function ResultsCard() {
 
       <div className="text-center mb-6">
         <p className="text-5xl font-bold text-cyan-400">
-          82/100
+         {truthScore}/100
         </p>
 
         <p className="text-slate-400 mt-2">
@@ -24,7 +30,7 @@ function ResultsCard() {
     </h3>
 
     <p className="text-green-400 font-bold">
-      Mostly Reliable
+      {verdict}
     </p>
   </div>
 
@@ -34,7 +40,7 @@ function ResultsCard() {
     </h3>
 
     <p className="text-cyan-400 font-bold">
-      87%
+      {confidence}%
     </p>
   </div>
 
@@ -44,7 +50,7 @@ function ResultsCard() {
     </h3>
 
     <p className="text-blue-400 font-bold">
-      12
+      {sourcesChecked}
     </p>
   </div>
 
@@ -94,7 +100,7 @@ function ResultsCard() {
     </ul>
   </div>
 </div>
-
+<TruthScoreChart />
     </div>
   );
 }
