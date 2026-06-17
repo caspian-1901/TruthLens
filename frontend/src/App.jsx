@@ -10,6 +10,26 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [url, setUrl] = useState("");
 const [articleText, setArticleText] = useState("");
+const [result, setResult] = useState(null);
+ const handleAnalyze = () => {
+    const fakeResponse = {
+      analysis: {
+        verdict: "Fake",
+        score: 18,
+        reasoning:
+          "This article uses emotional language and makes unverified claims.",
+        red_flags: [
+          "No source cited",
+          "Sensational headline",
+        ],
+        positive_signals: [],
+        category: "Health",
+      },
+    };
+
+    setResult(fakeResponse);
+    setShowResults(true);
+  };
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <div className="max-w-5xl mx-auto px-6 py-20">
@@ -97,7 +117,7 @@ const [articleText, setArticleText] = useState("");
 />
 
           <button
-          onClick={() => setShowResults(true)}
+          onClick={handleAnalyze}
   className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02] transition-all duration-300 p-4 rounded-xl font-semibold shadow-lg"
 >
   Analyze News →
