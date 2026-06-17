@@ -1,6 +1,7 @@
 fastapi
 uvicorn
-google-generativeai
+google-genai
 newspaper3k
 requests
 python-dotenv
+lxml_html_clean
