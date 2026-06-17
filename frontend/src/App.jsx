@@ -1,35 +1,36 @@
 import { useState } from "react";
 import ResultsCard from "./components/ResultsCard";
-const mockResult = {
-  truthScore: 82,
-  confidence: 87,
-  sourcesChecked: 12,
-  verdict: "Mostly Reliable",
-};
+
 function App() {
   const [showResults, setShowResults] = useState(false);
   const [url, setUrl] = useState("");
 const [articleText, setArticleText] = useState("");
 const [result, setResult] = useState(null);
- const handleAnalyze = () => {
-    const fakeResponse = {
-      analysis: {
-        verdict: "Fake",
-        score: 18,
-        reasoning:
-          "This article uses emotional language and makes unverified claims.",
-        red_flags: [
-          "No source cited",
-          "Sensational headline",
-        ],
-        positive_signals: [],
-        category: "Health",
-      },
-    };
+const handleAnalyze = async () => {
+  try {
+    const response = await fetch(
+      "https://outstanding-fascination-production-11b9.up.railway.app/analyze/text",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: articleText,
+        }),
+      }
+    );
 
-    setResult(fakeResponse);
+    const data = await response.json();
+
+    setResult(data);
     setShowResults(true);
-  };
+
+  } catch (error) {
+    console.error("API Error:", error);
+  }
+};
+    
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <div className="max-w-5xl mx-auto px-6 py-20">
@@ -125,13 +126,17 @@ const [result, setResult] = useState(null);
 
        </div>
 
-{showResults && (
+{showResults && result && (
   <ResultsCard
-  truthScore={mockResult.truthScore}
-  confidence={mockResult.confidence}
-  sourcesChecked={mockResult.sourcesChecked}
-  verdict={mockResult.verdict}
-/>
+  truthScore={result.analysis.score}
+    confidence={100}
+    sourcesChecked={result.fact_checks?.length || 0}
+    verdict={result.analysis.verdict}
+    reasoning={result.analysis.reasoning}
+    redFlags={result.analysis.red_flags}
+    factChecks={result.fact_checks}
+
+  />
 )}
 
 </div>

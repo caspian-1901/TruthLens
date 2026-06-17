@@ -17,13 +17,13 @@ ChartJS.register(
   Legend
 );
 
-function TruthScoreChart() {
+function TruthScoreChart({ truthScore }) {
   const data = {
     labels: ["Reliability"],
     datasets: [
   {
     label: "TruthScore™",
-    data: [82],
+    data: [truthScore],
   },
 ],
   };

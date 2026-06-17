@@ -4,7 +4,10 @@ function ResultsCard({
   confidence,
   sourcesChecked,
   verdict,
-})  {
+  reasoning,
+  redFlags,
+  factChecks,
+}) {
   return (
     <div className="bg-slate-900/80 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-slate-800 mt-10">
 
@@ -61,10 +64,9 @@ function ResultsCard({
           AI Summary
         </h3>
 
-        <p className="text-slate-400">
-          This article appears to contain mostly accurate
-          information with no major misinformation signals detected.
-        </p>
+       <p className="text-slate-400">
+  {reasoning}
+</p>
       </div>
       <div className="mt-8">
   <h3 className="font-semibold mb-4">
@@ -73,10 +75,10 @@ function ResultsCard({
 
   <div className="bg-slate-800 rounded-2xl p-4">
     <ul className="space-y-3 text-slate-300">
-      <li>✓ Renewable energy breakthrough announced</li>
-      <li>✓ Solar power costs expected to decrease</li>
-      <li>✓ New technology currently under testing</li>
-    </ul>
+  {redFlags?.map((flag, index) => (
+    <li key={index}>⚠ {flag}</li>
+  ))}
+</ul>
   </div>
 </div>
 <div className="mt-8">
@@ -86,21 +88,15 @@ function ResultsCard({
 
   <div className="bg-slate-800 rounded-2xl p-4">
     <ul className="space-y-3">
-      <li className="text-green-400">
-        ✓ Renewable energy breakthrough announced — Verified
-      </li>
-
-      <li className="text-yellow-400">
-        ⚠ Solar power costs expected to decrease — Partially Verified
-      </li>
-
-      <li className="text-red-400">
-        ✗ New technology currently under testing — Not Found
-      </li>
-    </ul>
+  {factChecks?.map((check, index) => (
+    <li key={index} className="text-cyan-400">
+      ✓ {check.publisher} — {check.rating}
+    </li>
+  ))}
+</ul>
   </div>
 </div>
-<TruthScoreChart />
+<TruthScoreChart truthScore={truthScore} />
     </div>
   );
 }
