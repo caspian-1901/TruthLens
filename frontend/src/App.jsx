@@ -5,30 +5,40 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [url, setUrl] = useState("");
 const [articleText, setArticleText] = useState("");
+const [loading, setLoading] = useState(false);
 const [result, setResult] = useState(null);
 const handleAnalyze = async () => {
   try {
-    const response = await fetch(
-      "https://outstanding-fascination-production-11b9.up.railway.app/analyze/text",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: articleText,
-        }),
-      }
-    );
+    setLoading(true);
+    const endpoint = url.trim()
+  ? "/analyze/url"
+  : "/analyze/text";
+
+const payload = url.trim()
+  ? { url: url }
+  : { text: articleText };
+
+const response = await fetch(
+  `https://outstanding-fascination-production-11b9.up.railway.app${endpoint}`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  }
+);
 
     const data = await response.json();
 
     setResult(data);
     setShowResults(true);
+    setLoading(false);
 
   } catch (error) {
-    console.error("API Error:", error);
-  }
+  console.error("API Error:", error);
+  setLoading(false);
+}
 };
     
   return (
@@ -121,7 +131,7 @@ const handleAnalyze = async () => {
           onClick={handleAnalyze}
   className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02] transition-all duration-300 p-4 rounded-xl font-semibold shadow-lg"
 >
-  Analyze News →
+  {loading ? "Analyzing..." : "Analyze News →"}
 </button>
 
        </div>
