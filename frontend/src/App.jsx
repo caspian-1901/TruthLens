@@ -175,7 +175,7 @@ const response = await fetch(
   <div className="inline-flex items-center justify-center mr-4 w-24 h-24 rounded-full border-2 border-cyan-400 shadow-[0_0_40px_rgba(34,211,238,0.8)]">
   👁️
 </div>
-  <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(34,211,238,0.5)]">
+  <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(34,211,238,0.5)] text-5xl sm:text-6xl md:text-8xl">
     TruthLens
   </span>
 </h1>
