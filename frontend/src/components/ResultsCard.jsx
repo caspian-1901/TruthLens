@@ -27,23 +27,31 @@ function ResultsCard({
 
      <div className="grid md:grid-cols-3 gap-6 text-center">
 
-  <div className="bg-slate-800 p-4 rounded-2xl">
-    <h3 className="text-slate-400 mb-2">
-      Verdict
-    </h3>
-
-    <p
-  className={`font-bold ${
+  <div
+  className={`p-4 rounded-2xl border-2 ${
     verdict === "Fake"
-      ? "text-red-400"
+      ? "bg-red-500/20 border-red-500"
       : verdict === "Unverified"
-      ? "text-yellow-400"
-      : "text-green-400"
+      ? "bg-yellow-500/20 border-yellow-500"
+      : "bg-green-500/20 border-green-500"
   }`}
 >
-  {verdict}
-</p>
-  </div>
+  <h3 className="text-slate-300 mb-2">
+    Verdict
+  </h3>
+
+  <p
+    className={`text-2xl font-bold ${
+      verdict === "Fake"
+        ? "text-red-400"
+        : verdict === "Unverified"
+        ? "text-yellow-400"
+        : "text-green-400"
+    }`}
+  >
+    {verdict}
+  </p>
+</div>
 
   <div className="bg-slate-800 p-4 rounded-2xl">
     <h3 className="text-slate-400 mb-2">
@@ -95,22 +103,29 @@ function ResultsCard({
   </h3>
 
   <div className="bg-slate-800 rounded-2xl p-4">
-    <ul className="space-y-3">
-  {factChecks?.map((check, index) => (
-    <li key={index}>
-  <a
-    href={check.url}
-    target="_blank"
-    rel="noreferrer"
-    className="text-cyan-400 hover:text-cyan-300 underline"
-  >
-    ✓ {check.publisher} — {check.rating}
-  </a>
-</li>
-  ))}
-</ul>
+    {factChecks?.length > 0 ? (
+      <ul className="space-y-3">
+        {factChecks.map((check, index) => (
+          <li key={index}>
+            <a
+              href={check.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-cyan-400 hover:text-cyan-300 underline"
+            >
+              ✓ {check.publisher} — {check.rating}
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-yellow-400">
+        No matching fact-checks found in our database for this claim.
+      </p>
+    )}
   </div>
 </div>
+
 <TruthScoreChart truthScore={truthScore} />
     </div>
   );
